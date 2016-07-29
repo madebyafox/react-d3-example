@@ -6,17 +6,25 @@ class Histogram extends Component {
   constructor(props) {
     super();
 
-    this.histogram = d3.layout.histogram();
-    this.widthScale = d3.scale.linear();
-    this.yScale = d3.scale.linear();
-    this.update_d3(props);
+    //Going to use builtin d3 histogram layout for the graph, but unforunately because we are using react
+    //and want to let react maintain the state, we want to avoid using the .value() accessor which would normally update
+    //the layout based on the values of our data
+    //Combining D3 with react we mitigate this isue by relying on 3 methods (from Swizec Teller):
+    //(1) the constructor -- create d3 objects and any defaults, then calls update_d3 to set d3 Obj properties based on component props
+    //(2) componentWillReceiveProps -- call update_d3 anytime props change
+    //(3) update_d3 -- updates the d3 objects using the current component properties
+
+    this.histogram = d3.layout.histogram() //going to use d3 builtin histogram layout
+    this.widthScale = d3.scale.linear()
+    this.yScale = d3.scale.linear()
+    this.update_d3(props) // <- set the value of the d3 objects for the graph based on the component props
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps(newProps) {// <-- everytime new props are received, update d3 objs
     this.update_d3(newProps);
   }
 
-  update_d3(props){
+  update_d3(props){// <-- actually update the d3 object properties
     this.histogram
       .bins(props.bins)
       .value(props.value);
