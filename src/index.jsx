@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import H1BGraph from './components/H1BGraph/index.jsx';
+import H1BGraph from './components/H1BGraph/H1BGraph.jsx';
 
 String.prototype.capitalize = () => {
   return this.charAt(0).toUpperCase() + this.slice(1);
