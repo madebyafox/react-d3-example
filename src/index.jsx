@@ -1,6 +1,6 @@
+require ('./styles/style.less')
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import H1BGraph from './components/H1BGraph/H1BGraph.jsx';
 
 String.prototype.capitalize = () => {
