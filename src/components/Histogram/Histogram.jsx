@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import d3 from 'd3';
+import Axis from './Axis.jsx';
 
 
 class Histogram extends Component {
+  //In constructor(), we create the d3 objects and give them any defaults we know about.
+  //Then we call this.update_d3. In componentWillReceiveProps(), we call this.update_d3 every
+  //time props change. update_d3() does the heavy lifting - it updates d3 objects using current component properties.
   constructor(props) {
-    super();
+    super(props);
 
     //Going to use builtin d3 histogram layout for the graph, but unforunately because we are using react
     //and want to let react maintain the state, we want to avoid using the .value() accessor which would normally update
@@ -61,14 +65,19 @@ class Histogram extends Component {
   }
 
   render() {
+    console.log('here are my props in historgram', this.props)
     let translate = `translate(0, ${this.props.topMargin})`,
         bars = this.histogram(this.props.data);
 
+    ////The coolest part is that we can .map() through our histogram data even though we’re inside XML.
+    //That’s the magic of JSX – JavaScript and XML living together as one.
+    //We could have put the entire makeBar function in here, but that would make our code hard to read.
     return (
       <g className="histogram" transform={translate}>
         <g className="bars">
           {bars.map(::this.makeBar)}
         </g>
+        <Axis {...this.props} data={bars}  />
       </g>
     );
   }
