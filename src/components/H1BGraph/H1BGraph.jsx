@@ -6,6 +6,7 @@ class H1BGraph extends Component {
   constructor() {
     super();
 
+
     this.state = {
       rawData: []
     };
